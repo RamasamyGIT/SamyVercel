@@ -1,14 +1,112 @@
-<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <script type="module" crossorigin src="/assets/index-DfQ3Eo-l.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DiwrgTda.css">
-  </head>
-  <body>
+
+<head>
+    <title>Belajar React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #root {
+            background-color: rgb(229, 255, 0);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #00ff00;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: green;
+            color: rgb(0, 255, 85);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #055e34;
+        }
+
+        button:active {
+            background-color: #09ff00;
+        }
+    </style>
+</head>
+
+<body>
     <div id="root"></div>
-  </body>
+    <script type="text/babel">
+        const container = document.getElementById('root'); const root = ReactDOM.createRoot(container);
+        function HomePage() {
+            const [count, setCount] = React.useState(0);
+            const [jenisPisang, setJenisPisang] = React.useState(''); const [jumlahPisang, setJumlahPisang] = React.useState({}); const daftarPisang = [
+                'Pisang Ambon',
+                'Pisang Raja',
+                'Pisang Cavendish',
+                'Pisang Kepok',
+                'Pisang Barangan',
+                'Pisang Tanduk',
+                'Pisang Mas',
+                'Pisang Uli'];
+            function ambilJenisPisangRandom() {
+                const indeksRandom = Math.floor(Math.random() * daftarPisang.length); return daftarPisang[indeksRandom];
+            }
+            function handleMinusClick() {
+                setCount(count - 1);
+                if (count - 1 === 0) {
+                    setJenisPisang(''); setJumlahPisang({});
+                }
+            }
+            function handlePlusClick() {
+                setCount(count + 1);
+                perbaruiJenisPisang();
+            }
+            function perbaruiJenisPisang() {
+                const jenisPisangBaru = ambilJenisPisangRandom(); setJenisPisang(jenisPisangBaru); setJumlahPisang(prevJumlah => {
+                    const jumlahBaru = { ...prevJumlah };
+                    jumlahBaru[jenisPisangBaru] = (jumlahBaru[jenisPisangBaru] || 0) + 1; return jumlahBaru;
+                });
+            }
+            return (<>
+                <div>
+                    <h1>Hitung Pisangmu</h1>
+                    <h2>{count}</h2>
+                    <h3>{jenisPisang}</h3>
+                </div>
+                <div>
+                    <button onClick={handleMinusClick}>-</button>
+                    <button onClick={handlePlusClick}>+</button>
+                </div>
+                {count > 0 && (<div>
+                    <h4>Total jenis pisang yang sudah ditemukan:</h4>
+                    <ul>
+                        {Object.keys(jumlahPisang).map((pisang, index) => (<li key={index}>{pisang}: {jumlahPisang[pisang]}</li>
+                        ))} </ul>
+                </div>
+                )} </>
+            );
+        }
+        root.render(<HomePage />); </script>
+</body>
+
 </html>
